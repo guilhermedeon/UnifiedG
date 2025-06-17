@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+	<row>
+		<button text="gbyn /a" ontap="abort" />
+	</row>
+	<row>
+		<button text="10m" ontap="tenm" />
+		<button text="20m" ontap="twentym" />
+		<button text="30m" ontap="thirtym" />
+	</row>
+	<row>
+		<button text="1h" ontap="oneh" />
+		<button text="1h30m" ontap="onehm" />
+	</row>
+	<row>
+		<button text="2h" ontap="twoh" />
+		<button text="2h30m" ontap="twohm" />
+	</row>
+	<row>
+		<button text="3h" ontap="threeh" />
+		<button text="3h30m" ontap="threehm" />
+	</row>
+	<row>
+		<button text="4h" ontap="fourh" />
+		<button text="4h30m" ontap="fourhm" />
+	</row>
+</layout>

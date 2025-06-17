@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout color="#3A3A3A">
+    <tabs>
+        <tab text="Player">
+            <row>
+                <button icon="playpause" ontap="play_pause" />
+                <button icon="stop" ontap="stop" />
+            </row>
+
+            <row>
+                <button icon="previous" ontap="prev_file" />
+                <button icon="next" ontap="next_file" />
+            </row>
+
+            <row>
+                <button text="Prev Chapter" ontap="prev_chapter" />
+                <button text="Next Chapter" ontap="next_chapter" />
+            </row>
+
+            <row>
+                <button icon="vdown" ontap="volume_down" />
+                <button icon="vup" ontap="volume_up" />
+                <button icon="mute" ontap="mute" />
+            </row>
+
+            <row>
+                <button icon="fullscreen" ontap="fullscreen" />
+                <button text="Shader" ontap="toggle_shader" />
+            </row>
+
+            <row>
+                <button text="-1 min" ontap="seek_back_60" />
+                <button text="-5 sec" ontap="seek_back_5" />
+                <button text="+5 sec" ontap="seek_forward_5" />
+                <button text="+1 min" ontap="seek_forward_60" />
+            </row>
+
+        </tab>
+    </tabs>
+</layout>
