@@ -74,3 +74,7 @@ end
 actions.seek_forward_60 = function()
     keyboard.stroke("up")
 end
+
+actions.cycle_sub = function()
+    keyboard.stroke("s")
+end
