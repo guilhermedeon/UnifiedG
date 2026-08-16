@@ -26,7 +26,7 @@
             <row>
                 <button icon="fullscreen" ontap="fullscreen" />
                 <button text="Shader" ontap="toggle_shader" />
-				<button text="Cycle Sub" ontap="cycle_sub"
+				<button text="Cycle Sub" ontap="cycle_sub" />
             </row>
 
             <row>
