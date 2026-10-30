@@ -1,67 +1,67 @@
-local script = libs.script;
+local script = libs.script
 
-
--- Documentation
--- http://www.unifiedremote.com/api
-
--- Script Library
--- http://www.unifiedremote.com/api/libs/script
-
-
---@help Command 1
-actions.tenm = function ()
-	script.default("shutdown -s -t 600");
+local function schedule_shutdown(seconds)
+    script.default("shutdown -a")
+    script.default("shutdown -s -t " .. seconds)
 end
 
-actions.twentym = function ()
-	script.default("shutdown -s -t 1200");
+--@help Shutdown computer in 10 minutes
+actions.tenm = function()
+    schedule_shutdown(600)
 end
 
-actions.thirtym = function ()
-	script.default("shutdown -s -t 1800");
+--@help Shutdown computer in 20 minutes
+actions.twentym = function()
+    schedule_shutdown(1200)
 end
 
-
-
-
-actions.oneh = function ()
-	script.default("shutdown -s -t 3600");
+--@help Shutdown computer in 30 minutes
+actions.thirtym = function()
+    schedule_shutdown(1800)
 end
 
-actions.twoh = function ()
-	script.default("shutdown -s -t 7200");
+--@help Shutdown computer in 1 hour
+actions.oneh = function()
+    schedule_shutdown(3600)
 end
 
-actions.threeh = function ()
-	script.default("shutdown -s -t 10800");
+--@help Shutdown computer in 1 hour 30 minutes
+actions.onehm = function()
+    schedule_shutdown(5400)
 end
 
-actions.fourh = function ()
-	script.default("shutdown -s -t 14400");
+--@help Shutdown computer in 2 hours
+actions.twoh = function()
+    schedule_shutdown(7200)
 end
 
-
-
-
-actions.onehm = function ()
-	script.default("shutdown -s -t 5400");
+--@help Shutdown computer in 2 hours 30 minutes
+actions.twohm = function()
+    schedule_shutdown(9000)
 end
 
-actions.twohm = function ()
-	script.default("shutdown -s -t 9000");
+--@help Shutdown computer in 3 hours
+actions.threeh = function()
+    schedule_shutdown(10800)
 end
 
-actions.threehm = function ()
-	script.default("shutdown -s -t 12600");
+--@help Shutdown computer in 3 hours 30 minutes
+actions.threehm = function()
+    schedule_shutdown(12600)
 end
 
-actions.fourhm = function ()
-	script.default("shutdown -s -t 16200");
+--@help Shutdown computer in 4 hours
+actions.fourh = function()
+    schedule_shutdown(14400)
 end
 
+--@help Shutdown computer in 4 hours 30 minutes
+actions.fourhm = function()
+    schedule_shutdown(16200)
+end
 
-
-actions.abort = function ()
-	script.default("shutdown -a");
+--@help Abort scheduled shutdown
+actions.abort = function()
+    script.default("shutdown -a")
 end
 
