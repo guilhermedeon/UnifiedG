@@ -1,0 +1,231 @@
+---
+name: unified-remote-dev
+description: Use when creating, modifying, refactoring, or debugging Unified Remote remotes (meta.prop, layout.xml, remote.lua). Covers syntax rules, styling constraints, LuaJIT scoping, Windows power APIs, and multi-agent verification without writing or running tests.
+---
+
+# Unified Remote Development Guide
+
+This skill provides an authoritative reference and operational playbook for developing, refactoring, and validating custom remotes for **Unified Remote Server** (Windows, macOS, Linux).
+
+---
+
+## 1. Core Operating Constraints (Non-Negotiable)
+
+When working on Unified Remote repositories:
+1. **Zero-Test Constraint:** Do **NOT** create test files and do **NOT** execute test suites. Unified Remote remotes are standalone packages; verification must rely strictly on static analysis.
+2. **Static Syntax Validation:** Always validate Lua scripts via bytecode compilation (`loadfile` / `luac` / LuaJIT) and XML layouts via XML DOM parsers (`[xml]` in PowerShell or `xml.etree.ElementTree` in Python).
+3. **Environment Isolation:** Never run commands that interact with or restart the active Unified Remote Server process or external directories (`%APPDATA%`, `%PROGRAMDATA%`). Confine all edits and scripts strictly to the project workspace.
+4. **Local Semantic Commits Only:** Never push to remote git remotes or open PRs unless explicitly instructed. Use Conventional Commits locally (`feat:`, `refactor:`, `fix:`, `chore:`).
+5. **Keybinding Preservation:** When mapping existing applications (such as MPV.NET via `input.conf`), treat user keybinding configuration files as authoritative and immutable (byte-for-byte preservation).
+
+---
+
+## 2. Remote Package Architecture
+
+A Unified Remote custom remote directory lives inside `Remotes/Custom/<RemoteName>/` and consists of:
+
+```
+<RemoteName>/
+├── meta.prop          # Remote metadata and categorization
+├── layout.xml         # XML UI layout (rows, buttons, sliders, tabs)
+├── remote.lua         # Lua event handlers, actions, and system libraries
+├── icon.png           # 48x48 PNG icon (standard resolution)
+└── icon_hires.png     # 96x96 / 128x128 PNG icon (high resolution)
+```
+
+---
+
+## 3. Strict Syntax & Specification Rules
+
+### 3.1 Metadata (`meta.prop`)
+
+Format is simple `key: value` pairs.
+
+```properties
+meta.name: My Remote Name
+meta.author: AuthorName
+meta.description: Short description of the remote
+meta.platform: windows
+meta.tags.category: media
+```
+
+#### ⚠️ Critical Traps & Anti-Patterns:
+- ❌ **NEVER use `meta.version: 1.0` or `2.0`:** The underlying .NET server parses `meta.version` strictly as an integer (`int.Parse`). Floating-point numbers throw a fatal `FormatException` that fails remote loading. Official upstream remotes omit `meta.version` entirely. Omit it or use integer `1`.
+- ❌ **NEVER use `meta.id`:** `meta.id` does not exist in the Unified Remote metadata schema. The folder name itself is the remote's identifier.
+- **Allowed Categories (`meta.tags.category`):** `media`, `utility`, `input`, `browser`, `gaming`, `presentation`, `legacy`.
+- **Allowed Platforms (`meta.platform`):** `windows`, `linux`, `mac` (can specify multiple space-separated: `windows mac`).
+
+---
+
+### 3.2 Layout Definition (`layout.xml`)
+
+Defines the mobile UI hierarchy.
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<layout lightcolor="#282828" darkcolor="#282828" onVolumeUp="vol_up" onVolumeDown="vol_down">
+    <tabs>
+        <tab text="Playback">
+            <row>
+                <button icon="playpause" weight="2" ontap="play_pause" />
+                <button icon="stop" weight="1" ontap="stop" />
+            </row>
+            <row>
+                <button text="Mute" icon="vmute" ontap="mute" />
+                <button text="Cancel" color="red" ontap="cancel" />
+            </row>
+        </tab>
+    </tabs>
+</layout>
+```
+
+#### ⚠️ Critical Traps & Anti-Patterns:
+- ❌ **NEVER pass hex colors into the `color` attribute:** In Unified Remote, `color="..."` strictly accepts predefined enum color literals:
+  - Allowed named colors: `red`, `grey`, `blue`, `green`, `orange`, `purple`, `pink`, `yellow`, `transparent`.
+  - Passing `color="#D32F2F"` throws an enum parsing error on the server!
+- **Hex Background Colors on `<layout>`:** Use `lightcolor="#hex"` and `darkcolor="#hex"` on the root `<layout>` tag, never `color="#hex"`.
+- **Icon Names:** Must match official icon assets:
+  - `vmute` (NOT `mute`)
+  - `playpause`, `play`, `pause`, `stop`, `previous`, `next`, `rwd`, `ff`
+  - `vup`, `vdown`, `fullscreen`
+- **Tab Titles:** Avoid raw `&` entities that can break strict XML parsers; use `and` (e.g., `<tab text="Audio and Subs">` instead of `Audio &amp; Subs`).
+- **Hardware Volume Buttons:** Bind device volume rocker via `onVolumeUp="..."` and `onVolumeDown="..."` on the root `<layout>` element.
+
+---
+
+### 3.3 Scripting Logic (`remote.lua`)
+
+Executes backend actions in Lua 5.1 / LuaJIT.
+
+```lua
+local keyboard = libs.keyboard;
+local script = libs.script;
+local device = libs.device;
+local server = libs.server;
+local timer = libs.timer;
+
+-- Helper functions MUST be defined in chunk scope (NO 'local function')
+function feedback ()
+    pcall(function () device.vibrate(); end);
+end
+
+--@help Toggle play / pause playback
+actions.play_pause = function ()
+    feedback();
+    keyboard.stroke("space");
+end;
+
+--@help Decrease volume
+actions.vol_down = function ()
+    keyboard.press("volumedown");
+end;
+```
+
+#### ⚠️ Critical Traps & Anti-Patterns:
+- ❌ **NEVER use `local function` for helpers:** Helper functions must be chunk-scoped (`function helper ()`). Unified Remote executes actions in separate environments; local function closures at file scope can fail or cause scope isolation traps.
+- **Formatting Conventions:** Use standard spacing (`actions.name = function ()`) and statement-ending semicolons (`;`) matching official upstream code.
+- **Action Metadata Docstrings:** Place `--@help <description>` on the immediate line preceding `actions.<name> = function ()`.
+- **Haptic & Toast Safety:** Always wrap `device.vibrate()` and `device.toast()` in `pcall` guards, as some mobile clients do not support them.
+- **Windows Shutdown Collision (Error 1190):** Scheduling `shutdown -s -t <sec>` while a previous timer is active causes Windows Error 1190. Always prepend cancellation:
+  ```lua
+  function schedule_shutdown (seconds)
+      script.default("shutdown -a");
+      script.default("shutdown -s -t " .. seconds);
+  end;
+  ```
+- **Windows FFI Power Calls (Sleep/Hibernate/Lock):**
+  - Follow the official `Power` remote pattern:
+  ```lua
+  local ffi = nil;
+  local PowrProf = nil;
+  pcall(function ()
+      ffi = require("ffi");
+      ffi.cdef[[
+      bool LockWorkStation();
+      bool SetSuspendState(bool hibernate, bool forceCritical, bool disableWakeEvent);
+      ]];
+      PowrProf = ffi.load("PowrProf");
+  end);
+
+  actions.lock = function ()
+      if ffi and ffi.C then
+          ffi.C.LockWorkStation();
+      else
+          script.default("rundll32.exe user32.dll,LockWorkStation");
+      end;
+  end;
+  ```
+  - Note: `LockWorkStation` is part of `user32` which is automatically in `ffi.C`. Do **not** call `ffi.load("user32")`.
+  - Always provide CLI fallback (`rundll32.exe`, `shutdown -h`, `shutdown -r -t 0`) in case FFI is disabled.
+
+---
+
+## 4. Multi-Agent Orchestration Playbook
+
+When executing complex refactorings or new remote generation, use this 4-role multi-agent workflow:
+
+```mermaid
+flowchart TD
+    Orchestrator["Orchestrator (Parent Agent)"] --> Worker["Worker Agent"]
+    Worker -->|"Implements changes & verifies syntax"| Reviewers["Dual Independent Reviewers"]
+    Reviewers --> Reviewer1["Reviewer 1: Spec & Quality"]
+    Reviewers --> Reviewer2["Reviewer 2: Adversarial & Edge-Cases"]
+    Reviewer1 -->|"APPROVE"| Convergence["Convergence & Semantic Commit"]
+    Reviewer2 -->|"APPROVE"| Convergence
+    Convergence --> NextBranch["Next Milestone / V2 Branch"]
+```
+
+1. **Role: Orchestrator (Project Owner)**
+   - Plans milestones and tracks git branches (`refactor/existing-remotes` -> `feat/v2-remotes`).
+   - Ensures strict constraint isolation.
+   - Spawns and manages subagents; does not execute code directly.
+2. **Role: Worker Agent**
+   - Implements code improvements and fixes.
+   - Validates syntax in-memory via local compilers before reporting back.
+3. **Role: Reviewer 1 (Code Quality & Spec Compliance)**
+   - Audits `meta.prop` against official metadata schema.
+   - Audits `layout.xml` for valid control colors, hierarchy, and tags.
+   - Verifies zero `local function` in `remote.lua`.
+   - Verifies 0 test files created and `input.conf` byte-for-byte preservation.
+4. **Role: Reviewer 2 (Adversarial & Edge-Cases)**
+   - Verifies 100% action binding coverage: every `ontap`, `onVolumeUp`, `onVolumeDown` maps to an action.
+   - Checks XML entity escaping (`&amp;`) and FFI fallback safety.
+   - Confirms local semantic commit history and clean git status.
+
+---
+
+## 5. Automated Static Validation Commands
+
+Run these PowerShell one-liners to validate all remotes without tests or external process interactions:
+
+```powershell
+# 1. Validate all XML layouts for well-formedness
+Get-ChildItem -Recurse -Filter "layout.xml" | ForEach-Object {
+    try {
+        $xml = [xml](Get-Content -Raw $_.FullName)
+        Write-Host "PASS XML: $($_.FullName)" -ForegroundColor Green
+    } catch {
+        Write-Host "FAIL XML: $($_.FullName) - $($_.Exception.Message)" -ForegroundColor Red
+    }
+}
+
+# 2. Validate all Lua scripts for syntax errors via LuaJIT compiler
+Get-ChildItem -Recurse -Filter "remote.lua" | ForEach-Object {
+    $res = nvim --headless -c "lua local ok, err = loadfile([[$($_.FullName)]]); if not ok then print('ERROR: ' .. err); vim.cmd('cquit 1') else print('OK') end" -c "q" 2>&1
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "PASS LUA: $($_.FullName)" -ForegroundColor Green
+    } else {
+        Write-Host "FAIL LUA: $($_.FullName) - $res" -ForegroundColor Red
+    }
+}
+
+# 3. Verify zero illegal properties in meta.prop
+Get-ChildItem -Recurse -Filter "meta.prop" | ForEach-Object {
+    $content = Get-Content $_.FullName
+    if ($content -match "meta\.version" -or $content -match "meta\.id") {
+        Write-Host "FAIL META: $($_.FullName) contains illegal version or id property!" -ForegroundColor Red
+    } else {
+        Write-Host "PASS META: $($_.FullName)" -ForegroundColor Green
+    }
+}
+```
