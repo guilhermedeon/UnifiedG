@@ -27,3 +27,8 @@
 ## 3. Workflow & Orchestration
 - Use a multi-agent workflow: Orchestrator coordinates phases, Worker implements & checks, and Dual Reviewers (Quality/Spec Reviewer + Adversarial Reviewer) perform independent reviews before converging on semantic commits.
 - Refer to the `unified-remote-dev` skill (`.agents/skills/unified-remote-dev/SKILL.md`) for full API and syntax details.
+
+## 4. Authoritative Knowledge Sources & Reference Repositories
+- **Unified Remote Documentation:** [https://github.com/unifiedremote/Docs](https://github.com/unifiedremote/Docs) — Complete API documentation, architecture concepts (`concepts/metadata.md`, `concepts/layout.md`, `concepts/remote.md`, `concepts/cross-platform.md`), control specifications (`controls/button.md`, `controls/styling.md`, `controls/tabs.md`, `controls/slider.md`, `controls/dialogs.md`), and library references (`libs/keyboard.md`, `libs/script.md`, `libs/ffi.md`, `libs/device.md`, `libs/timer.md`, `libs/server.md`).
+- **Official Remotes Repository:** [https://github.com/unifiedremote/Remotes](https://github.com/unifiedremote/Remotes) — Canonical reference implementations of production remotes (`Main/MPC-HC`, `Main/VLC`, `Main/Power`, `Main/Volume`, etc.).
+- **Unified Remote GitHub Organization:** [https://github.com/unifiedremote](https://github.com/unifiedremote) — Root ecosystem including community remotes and test suites (`unifiedremote/Test-Remotes`).

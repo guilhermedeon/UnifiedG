@@ -20,7 +20,22 @@ When working on Unified Remote repositories:
 
 ---
 
-## 2. Remote Package Architecture
+## 2. Authoritative Knowledge Sources & Upstream Repositories
+
+Always consult these canonical repositories for official API schemas, control definitions, and working patterns:
+- **Unified Remote Documentation:** [https://github.com/unifiedremote/Docs](https://github.com/unifiedremote/Docs)
+  - Concepts: `concepts/metadata.md`, `concepts/layout.md`, `concepts/remote.md`, `concepts/cross-platform.md`
+  - Controls: `controls/button.md`, `controls/styling.md`, `controls/tabs.md`, `controls/slider.md`, `controls/dialogs.md`
+  - Libraries: `libs/keyboard.md`, `libs/script.md`, `libs/ffi.md`, `libs/device.md`, `libs/timer.md`, `libs/server.md`
+  - Assets: `res/icons.md` (official icon list), `res/keys.md` (supported virtual key identifiers)
+- **Official Remotes Source Code:** [https://github.com/unifiedremote/Remotes](https://github.com/unifiedremote/Remotes)
+  - Canonical implementations under `Main/` (e.g., `Main/MPC-HC`, `Main/VLC`, `Main/Power`, `Main/Volume`)
+- **Unified Remote GitHub Organization:** [https://github.com/unifiedremote](https://github.com/unifiedremote)
+  - Includes `Test-Remotes`, user repositories, and developer resources.
+
+---
+
+## 3. Remote Package Architecture
 
 A Unified Remote custom remote directory lives inside `Remotes/Custom/<RemoteName>/` and consists of:
 
@@ -35,7 +50,7 @@ A Unified Remote custom remote directory lives inside `Remotes/Custom/<RemoteNam
 
 ---
 
-## 3. Strict Syntax & Specification Rules
+## 4. Strict Syntax & Specification Rules
 
 ### 3.1 Metadata (`meta.prop`)
 
@@ -160,7 +175,7 @@ end;
 
 ---
 
-## 4. Multi-Agent Orchestration Playbook
+## 5. Multi-Agent Orchestration Playbook
 
 When executing complex refactorings or new remote generation, use this 4-role multi-agent workflow:
 
@@ -194,7 +209,7 @@ flowchart TD
 
 ---
 
-## 5. Automated Static Validation Commands
+## 6. Automated Static Validation Commands
 
 Run these PowerShell one-liners to validate all remotes without tests or external process interactions:
 
