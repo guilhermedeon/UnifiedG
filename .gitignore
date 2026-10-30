@@ -1,0 +1,5 @@
+# Agent execution artifacts and logs
+.agents/teamwork/
+
+# Local context and references
+context/
