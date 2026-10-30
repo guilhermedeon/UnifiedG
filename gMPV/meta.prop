@@ -1,5 +1,7 @@
 meta.name: gMPV
 meta.author: gbyn
 meta.description: gbyns MPV
+meta.version: 1.0
+meta.platform: windows
 meta.tags: mpv,gbyn
-meta.tags.category: input
+meta.tags.category: media
