@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout color="#1E1E1E">
+    <row>
+        <label id="countdown_lbl" text="No timer active" textalign="center" color="#888888" />
+    </row>
+    <row>
+        <slider id="progress_slider" progress="0" progressmax="100" />
+    </row>
+    <row>
+        <button text="15m" ontap="timer_15m" />
+        <button text="30m" ontap="timer_30m" />
+        <button text="45m" ontap="timer_45m" />
+    </row>
+    <row>
+        <button text="1h" ontap="timer_1h" />
+        <button text="2h" ontap="timer_2h" />
+        <button text="3h" ontap="timer_3h" />
+    </row>
+    <row>
+        <button text="-5m" ontap="sub_5m" />
+        <button text="+5m" ontap="add_5m" />
+        <button text="+15m" ontap="add_15m" />
+        <button text="Custom..." ontap="prompt_custom" />
+    </row>
+    <row>
+        <button text="Sleep" ontap="sleep_now" />
+        <button text="Hibernate" ontap="hibernate_now" />
+        <button text="Restart" ontap="restart_now" />
+        <button text="Lock" ontap="lock_workstation" />
+    </row>
+    <row>
+        <button text="Cancel Timer" color="#D32F2F" ontap="abort" />
+    </row>
+</layout>
