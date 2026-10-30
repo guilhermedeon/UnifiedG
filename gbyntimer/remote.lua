@@ -1,67 +1,66 @@
 local script = libs.script;
 
+function schedule_shutdown (seconds)
+    script.default("shutdown -a");
+    script.default("shutdown -s -t " .. seconds);
+end
 
--- Documentation
--- http://www.unifiedremote.com/api
-
--- Script Library
--- http://www.unifiedremote.com/api/libs/script
-
-
---@help Command 1
+--@help Shutdown computer in 10 minutes
 actions.tenm = function ()
-	script.default("shutdown -s -t 600");
+    schedule_shutdown(600);
 end
 
+--@help Shutdown computer in 20 minutes
 actions.twentym = function ()
-	script.default("shutdown -s -t 1200");
+    schedule_shutdown(1200);
 end
 
+--@help Shutdown computer in 30 minutes
 actions.thirtym = function ()
-	script.default("shutdown -s -t 1800");
+    schedule_shutdown(1800);
 end
 
-
-
-
+--@help Shutdown computer in 1 hour
 actions.oneh = function ()
-	script.default("shutdown -s -t 3600");
+    schedule_shutdown(3600);
 end
 
-actions.twoh = function ()
-	script.default("shutdown -s -t 7200");
-end
-
-actions.threeh = function ()
-	script.default("shutdown -s -t 10800");
-end
-
-actions.fourh = function ()
-	script.default("shutdown -s -t 14400");
-end
-
-
-
-
+--@help Shutdown computer in 1 hour 30 minutes
 actions.onehm = function ()
-	script.default("shutdown -s -t 5400");
+    schedule_shutdown(5400);
 end
 
+--@help Shutdown computer in 2 hours
+actions.twoh = function ()
+    schedule_shutdown(7200);
+end
+
+--@help Shutdown computer in 2 hours 30 minutes
 actions.twohm = function ()
-	script.default("shutdown -s -t 9000");
+    schedule_shutdown(9000);
 end
 
+--@help Shutdown computer in 3 hours
+actions.threeh = function ()
+    schedule_shutdown(10800);
+end
+
+--@help Shutdown computer in 3 hours 30 minutes
 actions.threehm = function ()
-	script.default("shutdown -s -t 12600");
+    schedule_shutdown(12600);
 end
 
+--@help Shutdown computer in 4 hours
+actions.fourh = function ()
+    schedule_shutdown(14400);
+end
+
+--@help Shutdown computer in 4 hours 30 minutes
 actions.fourhm = function ()
-	script.default("shutdown -s -t 16200");
+    schedule_shutdown(16200);
 end
 
-
-
+--@help Abort scheduled shutdown
 actions.abort = function ()
-	script.default("shutdown -a");
+    script.default("shutdown -a");
 end
-

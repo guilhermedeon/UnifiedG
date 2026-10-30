@@ -1,4 +1,5 @@
 meta.name: gbyntimer
 meta.author: gbyn
 meta.description: Shutdown Timer
-meta.tags: timer, shutdown, gbyn
+meta.platform: windows
+meta.tags.category: utility
