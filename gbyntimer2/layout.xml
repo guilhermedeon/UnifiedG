@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout color="#1E1E1E">
+<layout lightcolor="#1E1E1E" darkcolor="#1E1E1E">
     <row>
-        <label id="countdown_lbl" text="No timer active" textalign="center" color="#888888" />
+        <label id="countdown_lbl" text="No timer active" textalign="center" color="grey" />
     </row>
     <row>
         <slider id="progress_slider" progress="0" progressmax="100" />
@@ -29,6 +29,6 @@
         <button text="Lock" ontap="lock_workstation" />
     </row>
     <row>
-        <button text="Cancel Timer" color="#D32F2F" ontap="abort" />
+        <button text="Cancel Timer" color="red" ontap="abort" />
     </row>
 </layout>

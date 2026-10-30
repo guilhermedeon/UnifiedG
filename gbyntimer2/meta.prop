@@ -1,8 +1,5 @@
-meta.id: gbyntimer2
 meta.name: gbyntimer SuperTimer
 meta.author: gbyn
 meta.description: Smart shutdown timer & power manager with live countdown, progress bar, custom dialog, and sleep/hibernate
-meta.version: 2.0
 meta.platform: windows
-meta.tags: timer, shutdown, power, sleep, hibernate, gbyn
 meta.tags.category: utility

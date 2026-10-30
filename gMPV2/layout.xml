@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout color="#282828" onVolumeUp="vol_up" onVolumeDown="vol_down">
+<layout lightcolor="#282828" darkcolor="#282828" onVolumeUp="vol_up" onVolumeDown="vol_down">
     <tabs>
         <tab text="Playback">
             <row>
@@ -37,7 +37,7 @@
             </row>
         </tab>
 
-        <tab text="Audio &amp; Subs">
+        <tab text="Audio and Subs">
             <row>
                 <button text="Cycle Audio Track" ontap="cycle_audio" />
                 <button text="Cycle Subtitle" ontap="cycle_sub" />
