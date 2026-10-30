@@ -1,10 +1,12 @@
 # UnifiedG Project Rules & Unified Remote Architecture
 
 ## 1. Operating Rules & Constraints
+- **Mandatory Feature Branching:** ALWAYS create and switch to a dedicated feature branch (`feat/<name>`, `fix/<name>`, `docs/<name>`, `refactor/<name>`) before making changes. NEVER commit directly to `master` or `main`.
 - **Zero-Test Constraint:** Do NOT create test files or execute test suites. Use static analysis only.
 - **Static Syntax Validation:** Validate all Lua files via LuaJIT compiler (`loadfile`) and all XML files via `[xml]`.
 - **Environment Isolation:** Do NOT touch running processes, Unified Remote instances, or external directories (`%APPDATA%`, `%PROGRAMDATA%`). All operations must remain strictly inside this workspace.
-- **Git Discipline:** Commit locally with Conventional Commits (`feat:`, `refactor:`, `fix:`). Do NOT push to remote repositories or open PRs unless explicitly instructed.
+- **Path Hygiene & Public Repo Standards:** Do NOT reference files outside the repository. Do NOT use hardcoded absolute paths specific to any developer's local machine (e.g., `C:\Users\...`). All paths must be relative or standard environment variables (`%APPDATA%`, `~/`).
+- **Git Discipline:** Commit locally on dedicated feature branches with Conventional Commits (`feat:`, `refactor:`, `fix:`, `docs:`). NEVER commit directly to `master` or `main`. Do NOT push to remote repositories or open PRs unless explicitly instructed.
 - **Custom Keybindings Authority:** `context/input.conf` contains the custom MPV.NET keybindings. It must remain 100% byte-for-byte identical (never edit or reformat it).
 
 ## 2. Unified Remote Specification Constraints
@@ -25,7 +27,7 @@
   - In FFI, `user32` functions (`LockWorkStation`) reside in `ffi.C`. Wrap FFI in `pcall` with CLI fallbacks.
 
 ## 3. Workflow & Orchestration
-- Use a multi-agent workflow: Orchestrator coordinates phases, Worker implements & checks, and Dual Reviewers (Quality/Spec Reviewer + Adversarial Reviewer) perform independent reviews before converging on semantic commits.
+- Use a multi-agent workflow: Orchestrator coordinates phases on dedicated feature branches, Worker implements & checks, and Dual Reviewers (Quality/Spec Reviewer + Adversarial Reviewer) perform independent reviews before converging on semantic commits. Never commit directly to `master` or `main`.
 - Refer to the `unified-remote-dev` skill (`.agents/skills/unified-remote-dev/SKILL.md`) for full API and syntax details.
 
 ## 4. Authoritative Knowledge Sources & Reference Repositories

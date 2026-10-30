@@ -12,11 +12,13 @@ This skill provides an authoritative reference and operational playbook for deve
 ## 1. Core Operating Constraints (Non-Negotiable)
 
 When working on Unified Remote repositories:
-1. **Zero-Test Constraint:** Do **NOT** create test files and do **NOT** execute test suites. Unified Remote remotes are standalone packages; verification must rely strictly on static analysis.
-2. **Static Syntax Validation:** Always validate Lua scripts via bytecode compilation (`loadfile` / `luac` / LuaJIT) and XML layouts via XML DOM parsers (`[xml]` in PowerShell or `xml.etree.ElementTree` in Python).
-3. **Environment Isolation:** Never run commands that interact with or restart the active Unified Remote Server process or external directories (`%APPDATA%`, `%PROGRAMDATA%`). Confine all edits and scripts strictly to the project workspace.
-4. **Local Semantic Commits Only:** Never push to remote git remotes or open PRs unless explicitly instructed. Use Conventional Commits locally (`feat:`, `refactor:`, `fix:`, `chore:`).
-5. **Keybinding Preservation:** When mapping existing applications (such as MPV.NET via `input.conf`), treat user keybinding configuration files as authoritative and immutable (byte-for-byte preservation).
+1. **Mandatory Feature Branching:** ALWAYS create a dedicated feature branch (`feat/<name>`, `fix/<name>`, `docs/<name>`, `refactor/<name>`) before making any changes. NEVER commit directly to `main` or `master`.
+2. **Zero-Test Constraint:** Do **NOT** create test files and do **NOT** execute test suites. Unified Remote remotes are standalone packages; verification must rely strictly on static analysis.
+3. **Static Syntax Validation:** Always validate Lua scripts via bytecode compilation (`loadfile` / `luac` / LuaJIT) and XML layouts via XML DOM parsers (`[xml]` in PowerShell or `xml.etree.ElementTree` in Python).
+4. **Environment Isolation:** Never run commands that interact with or restart the active Unified Remote Server process or external directories (`%APPDATA%`, `%PROGRAMDATA%`). Confine all edits and scripts strictly to the project workspace.
+5. **Path Hygiene & Public Repo Standards:** Do NOT reference external files or embed developer-specific hardcoded paths (e.g., `C:\Users\...`). Keep all documentation, paths, and scripts portable for public repositories using environment variables (`%APPDATA%`, `~/`) or repo-relative paths.
+6. **Local Semantic Commits Only:** Commit locally on dedicated feature branches using Conventional Commits (`feat:`, `refactor:`, `fix:`, `docs:`, `chore:`). Never push to remote git remotes or open PRs unless explicitly instructed.
+7. **Keybinding Preservation:** When mapping existing applications (such as MPV.NET via `input.conf`), treat user keybinding configuration files as authoritative and immutable (byte-for-byte preservation).
 
 ---
 
@@ -191,7 +193,7 @@ flowchart TD
 ```
 
 1. **Role: Orchestrator (Project Owner)**
-   - Plans milestones and tracks git branches (`refactor/existing-remotes` -> `feat/v2-remotes`).
+   - Plans milestones and creates dedicated feature branches (`feat/<name>`, `fix/<name>`, `docs/<name>`). Never commits directly to `main` or `master`.
    - Ensures strict constraint isolation.
    - Spawns and manages subagents; does not execute code directly.
 2. **Role: Worker Agent**
@@ -205,7 +207,7 @@ flowchart TD
 4. **Role: Reviewer 2 (Adversarial & Edge-Cases)**
    - Verifies 100% action binding coverage: every `ontap`, `onVolumeUp`, `onVolumeDown` maps to an action.
    - Checks XML entity escaping (`&amp;`) and FFI fallback safety.
-   - Confirms local semantic commit history and clean git status.
+   - Confirms local semantic commit history on dedicated feature branches and clean git status.
 
 ---
 
