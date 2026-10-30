@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout lightcolor="#282828" darkcolor="#282828" onVolumeUp="vol_up" onVolumeDown="vol_down">
+    <tabs>
+        <tab text="Playback">
+            <row>
+                <button icon="playpause" weight="2" ontap="play_pause" />
+                <button icon="stop" weight="1" ontap="stop" />
+                <button icon="fullscreen" weight="1" ontap="fullscreen" />
+            </row>
+
+            <row>
+                <button icon="previous" text="Prev File" ontap="prev_file" />
+                <button icon="next" text="Next File" ontap="next_file" />
+            </row>
+
+            <row>
+                <button text="Prev Chapter" ontap="prev_chapter" />
+                <button text="Next Chapter" ontap="next_chapter" />
+            </row>
+
+            <row>
+                <button icon="vdown" ontap="vol_down" />
+                <button icon="vup" ontap="vol_up" />
+                <button icon="vmute" ontap="mute" />
+            </row>
+
+            <row>
+                <button text="-30s" ontap="seek_back_30" />
+                <button text="-5s" ontap="seek_back_5" />
+                <button text="+5s" ontap="seek_forward_5" />
+                <button text="+30s" ontap="seek_forward_30" />
+            </row>
+
+            <row>
+                <button text="-5 min" ontap="seek_back_300" />
+                <button text="+5 min" ontap="seek_forward_300" />
+            </row>
+        </tab>
+
+        <tab text="Audio and Subs">
+            <row>
+                <button text="Cycle Audio Track" ontap="cycle_audio" />
+                <button text="Cycle Subtitle" ontap="cycle_sub" />
+            </row>
+
+            <row>
+                <button text="Toggle Sub Visibility" ontap="toggle_sub_visibility" />
+            </row>
+
+            <row>
+                <button text="Audio Delay -0.1s" ontap="audio_delay_down" />
+                <button text="Audio Delay +0.1s" ontap="audio_delay_up" />
+            </row>
+
+            <row>
+                <button text="Sub Delay -0.1s" ontap="sub_delay_down" />
+                <button text="Sub Delay +0.1s" ontap="sub_delay_up" />
+            </row>
+
+            <row>
+                <button text="Sub Position Up" ontap="sub_pos_up" />
+                <button text="Sub Position Down" ontap="sub_pos_down" />
+            </row>
+        </tab>
+
+        <tab text="Video &amp; Speed">
+            <row>
+                <button text="0.5x" ontap="speed_half" />
+                <button text="-10%" ontap="speed_down" />
+                <button text="1.0x" ontap="speed_reset" />
+                <button text="+10%" ontap="speed_up" />
+                <button text="2.0x" ontap="speed_double" />
+            </row>
+
+            <row>
+                <button text="Aspect Ratio" ontap="cycle_aspect" />
+                <button text="Deinterlace" ontap="toggle_deinterlace" />
+            </row>
+
+            <row>
+                <button text="Screenshot" ontap="screenshot" />
+                <button text="OSD Stats" ontap="show_stats" />
+                <button text="File Info" ontap="show_info" />
+            </row>
+        </tab>
+
+        <tab text="Tools &amp; OSD">
+            <row>
+                <button text="Focus MPV Window" ontap="focus_mpv" />
+            </row>
+
+            <row>
+                <button text="A-B Loop" ontap="ab_loop" />
+                <button text="Infinite Loop" ontap="loop_file" />
+            </row>
+
+            <row>
+                <button text="Frame Step Back (,)" ontap="frame_back_step" />
+                <button text="Frame Step Next (.)" ontap="frame_step" />
+            </row>
+
+            <row>
+                <button text="Open URL / Stream..." ontap="prompt_url" />
+            </row>
+        </tab>
+    </tabs>
+</layout>

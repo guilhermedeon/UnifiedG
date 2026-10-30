@@ -1,0 +1,5 @@
+meta.name: gbyntimer SuperTimer
+meta.author: gbyn
+meta.description: Smart shutdown timer & power manager with live countdown, progress bar, custom dialog, and sleep/hibernate
+meta.platform: windows
+meta.tags.category: utility
