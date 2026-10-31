@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
     <row>
-        <button text="gbyn /a" ontap="abort" />
+        <button text="Cancel" color="red" ontap="abort" />
     </row>
     <row>
         <button text="10m" ontap="tenm" />

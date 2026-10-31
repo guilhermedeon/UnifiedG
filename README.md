@@ -1,6 +1,6 @@
 # UnifiedG
 
-A collection of custom, production-ready remotes for [Unified Remote](https://www.unifiedremote.com/), featuring streamlined controls for media playback and system power management.
+A collection of custom, production-ready remotes for [Unified Remote](https://www.unifiedremote.com/), authored by `g`. Features streamlined controls for media playback (tuned to custom MPV.NET keybindings via `context/input.conf`) and Windows system power management.
 
 ---
 
@@ -11,14 +11,14 @@ A collection of custom, production-ready remotes for [Unified Remote](https://ww
 | Remote | Description | Highlights |
 | :--- | :--- | :--- |
 | **`gMPV`** | Classic, lightweight MPV controller | Fast single-tab playback, playlist navigation, chapter stepping, volume up/down/mute, and seek intervals. |
-| **`gMPV2` (gMPV Pro)** | Advanced multi-tab remote tuned for **MPV.NET** | 4-tab interface covering granular seeking (-5m to +5m), audio track cycling, subtitle delay & positioning, speed scaling (0.5x to 2.0x), aspect ratio cycling, frame stepping, and stream URL loading. |
+| **`gMPV v2`** | Advanced multi-tab remote tuned for **MPV.NET** | 4-tab interface covering granular seeking (-5m to +5m), audio track cycling, subtitle delay & positioning, speed scaling (0.5x to 2.0x), aspect ratio cycling, frame stepping, and stream URL loading. |
 
 ### Power & Timer Remotes (Windows)
 
 | Remote | Description | Highlights |
 | :--- | :--- | :--- |
-| **`gbyntimer`** | Classic shutdown timer | Quick-access grid for scheduled shutdowns from 10 minutes to 4.5 hours with collision-free cancellation. |
-| **`gbyntimer2` (SuperTimer)** | Smart power manager & live timer | Real-time countdown label (1-second tick), visual progress bar, instant increments (+5m, +15m, -5m), custom duration prompt dialog, and sleep / hibernate / workstation lock integration. |
+| **`gSleepTimer`** | Classic shutdown timer | Quick-access grid for scheduled shutdowns from 10 minutes to 4.5 hours with collision-free cancellation. |
+| **`gSleepTimer v2`** | Smart power manager & live timer | Real-time countdown label (1-second tick), visual progress bar, instant increments (+5m, +15m, -5m), custom duration prompt dialog, and sleep / hibernate / workstation lock integration. |
 
 ---
 
@@ -26,7 +26,7 @@ A collection of custom, production-ready remotes for [Unified Remote](https://ww
 
 ### 1. Copy to Custom Remotes Directory
 
-Copy the desired remote folders (`gMPV`, `gMPV2`, `gbyntimer`, `gbyntimer2`) into your Unified Remote **Custom Remotes** folder:
+Copy the desired remote folders (`gMPV`, `gMPV v2`, `gSleepTimer`, `gSleepTimer v2`) into your Unified Remote **Custom Remotes** folder:
 
 - **Windows:** `%APPDATA%\Unified Remote\Remotes\Custom\`
 - **macOS:** `~/Library/Application Support/Unified Remote/Remotes/Custom/`
@@ -35,7 +35,7 @@ Copy the desired remote folders (`gMPV`, `gMPV2`, `gbyntimer`, `gbyntimer2`) int
 #### PowerShell Example (Windows):
 ```powershell
 # Copy all remotes into your Unified Remote Custom folder:
-Copy-Item -Recurse -Path "gMPV", "gMPV2", "gbyntimer", "gbyntimer2" -Destination "$env:APPDATA\Unified Remote\Remotes\Custom\"
+Copy-Item -Recurse -Path "gMPV", "gMPV v2", "gSleepTimer", "gSleepTimer v2" -Destination "$env:APPDATA\Unified Remote\Remotes\Custom\"
 ```
 
 ### 2. Reload Server Remotes
@@ -49,7 +49,15 @@ Copy-Item -Recurse -Path "gMPV", "gMPV2", "gbyntimer", "gbyntimer2" -Destination
 
 ## 🛠️ Remote Details & Features
 
-### 🎬 gMPV2 (gMPV Pro)
+### 🎵 gMPV
+
+Classic, lightweight MPV and MPV.NET media remote:
+- **Playback Controls:** Large Play/Pause toggle, Stop, and Fullscreen switch.
+- **Navigation:** Next / Previous playlist file navigation and chapter stepping.
+- **Audio & Seeking:** Master volume up / down / mute, and quick 5s / 1m (60s) directional seeking.
+- **Hardware Volume Integration:** Native binding to mobile device volume rocker buttons via `onVolumeUp` and `onVolumeDown`.
+
+### 🎬 gMPV v2
 
 Built specifically for power users running MPV / MPV.NET:
 - **Tab 1: Playback**
@@ -58,22 +66,29 @@ Built specifically for power users running MPV / MPV.NET:
   - Chapter navigation.
   - Granular seek pad: `-5m`, `-30s`, `-5s`, `+5s`, `+30s`, `+5m`.
   - Master volume controls and mute toggle.
-- **Tab 2: Audio & Subs**
+- **Tab 2: Audio and Subs**
   - Cycle audio tracks and adjust audio delay (`-0.1s` / `+0.1s`).
   - Cycle subtitle tracks and toggle subtitle visibility.
   - Fine subtitle delay sync (`-0.1s` / `+0.1s`).
   - Move subtitle position up/down on-screen.
-- **Tab 3: Video & Speed**
+- **Tab 3: Video and Speed**
   - Playback speed scaling: `0.5x`, `-10%`, `1.0x` (reset), `+10%`, `2.0x`.
   - Aspect ratio toggle and deinterlacing switch.
   - Screenshot capture and on-screen statistics (OSD).
-- **Tab 4: Tools & OSD**
+- **Tab 4: Tools and OSD**
   - Window focus trigger for MPV.NET.
   - A-B loop and infinite file loop toggles.
   - Precise frame-stepping (backward and forward).
   - Open URL dialog: prompts for a stream URL and sends it directly to the player.
 
-### ⏱️ gbyntimer2 (SuperTimer)
+### 💤 gSleepTimer
+
+Classic Windows shutdown timer:
+- **Quick-Access Grid:** One-tap shutdown scheduling from 10 minutes to 4.5 hours (`10m`, `20m`, `30m`, `1h`, `1.5h`, `2h`, `2.5h`, `3h`, `3.5h`, `4h`, `4.5h`).
+- **Collision Protection:** Automatically executes `shutdown -a` before initiating a new timer to prevent Windows Error 1190.
+- **Dedicated Abort:** Prominent Cancel button to immediately abort any pending shutdown.
+
+### ⏱️ gSleepTimer v2
 
 Modernized Windows power management remote:
 - **Live Countdown & Progress Bar:** Updates every second with formatted remaining time (`Shutting down in 1h 15m 00s`) and visual progress percentage.
@@ -87,6 +102,7 @@ Modernized Windows power management remote:
 
 ## 📋 Technical Specifications & Compatibility
 
+- **Author:** `g`
 - **Server Compatibility:** Unified Remote Server v3.x on Windows.
 - **Client Compatibility:** Unified Remote for Android and iOS.
 - **Platform Architecture:**
@@ -100,10 +116,10 @@ Modernized Windows power management remote:
 ## 🤝 Contributing & Development Rules
 
 Contributions must follow the project rules outlined in [`AGENTS.md`](./AGENTS.md):
-- **Mandatory Feature Branching:** Always create a dedicated branch (`feat/<name>`, `fix/<name>`, `docs/<name>`). Never commit directly to `main` or `master`.
+- **Mandatory Feature Branching:** Always create a dedicated branch (`feat/<name>`, `fix/<name>`, `docs/<name>`, `refactor/<name>`). Never commit directly to `main` or `master`.
 - **Zero-Test Constraint:** Do not create test files or execute test suites; use static syntax validation only.
 - **Syntax Validation:** Verify Lua scripts via LuaJIT compiler (`loadfile`) and XML files via XML DOM parsers.
-- **Git Discipline:** Use Conventional Commits (`feat:`, `fix:`, `refactor:`, `docs:`).
+- **Git Discipline:** Use Conventional Commits (`feat:`, `fix:`, `refactor:`, `docs:`, `chore:`).
 
 ---
 
