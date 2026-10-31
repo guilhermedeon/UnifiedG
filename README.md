@@ -11,14 +11,14 @@ A collection of custom, production-ready remotes for [Unified Remote](https://ww
 | Remote | Description | Highlights |
 | :--- | :--- | :--- |
 | **`gMPV`** | Classic, lightweight MPV controller | Fast single-tab playback, playlist navigation, chapter stepping, volume up/down/mute, and seek intervals. |
-| **`gMPV2` (gMPV Pro)** | Advanced multi-tab remote tuned for **MPV.NET** | 4-tab interface covering granular seeking (-5m to +5m), audio track cycling, subtitle delay & positioning, speed scaling (0.5x to 2.0x), aspect ratio cycling, frame stepping, and stream URL loading. |
+| **`gMPV v2`** | Advanced multi-tab remote tuned for **MPV.NET** | 4-tab interface covering granular seeking (-5m to +5m), audio track cycling, subtitle delay & positioning, speed scaling (0.5x to 2.0x), aspect ratio cycling, frame stepping, and stream URL loading. |
 
 ### Power & Timer Remotes (Windows)
 
 | Remote | Description | Highlights |
 | :--- | :--- | :--- |
-| **`gbyntimer`** | Classic shutdown timer | Quick-access grid for scheduled shutdowns from 10 minutes to 4.5 hours with collision-free cancellation. |
-| **`gbyntimer2` (SuperTimer)** | Smart power manager & live timer | Real-time countdown label (1-second tick), visual progress bar, instant increments (+5m, +15m, -5m), custom duration prompt dialog, and sleep / hibernate / workstation lock integration. |
+| **`gSleepTimer`** | Classic shutdown timer | Quick-access grid for scheduled shutdowns from 10 minutes to 4.5 hours with collision-free cancellation. |
+| **`gSleepTimer v2`** | Smart power manager & live timer | Real-time countdown label (1-second tick), visual progress bar, instant increments (+5m, +15m, -5m), custom duration prompt dialog, and sleep / hibernate / workstation lock integration. |
 
 ---
 
@@ -26,7 +26,7 @@ A collection of custom, production-ready remotes for [Unified Remote](https://ww
 
 ### 1. Copy to Custom Remotes Directory
 
-Copy the desired remote folders (`gMPV`, `gMPV2`, `gbyntimer`, `gbyntimer2`) into your Unified Remote **Custom Remotes** folder:
+Copy the desired remote folders (`gMPV`, `gMPV v2`, `gSleepTimer`, `gSleepTimer v2`) into your Unified Remote **Custom Remotes** folder:
 
 - **Windows:** `%APPDATA%\Unified Remote\Remotes\Custom\`
 - **macOS:** `~/Library/Application Support/Unified Remote/Remotes/Custom/`
@@ -35,7 +35,7 @@ Copy the desired remote folders (`gMPV`, `gMPV2`, `gbyntimer`, `gbyntimer2`) int
 #### PowerShell Example (Windows):
 ```powershell
 # Copy all remotes into your Unified Remote Custom folder:
-Copy-Item -Recurse -Path "gMPV", "gMPV2", "gbyntimer", "gbyntimer2" -Destination "$env:APPDATA\Unified Remote\Remotes\Custom\"
+Copy-Item -Recurse -Path "gMPV", "gMPV v2", "gSleepTimer", "gSleepTimer v2" -Destination "$env:APPDATA\Unified Remote\Remotes\Custom\"
 ```
 
 ### 2. Reload Server Remotes
@@ -49,7 +49,7 @@ Copy-Item -Recurse -Path "gMPV", "gMPV2", "gbyntimer", "gbyntimer2" -Destination
 
 ## 🛠️ Remote Details & Features
 
-### 🎬 gMPV2 (gMPV Pro)
+### 🎬 gMPV v2
 
 Built specifically for power users running MPV / MPV.NET:
 - **Tab 1: Playback**
@@ -73,7 +73,7 @@ Built specifically for power users running MPV / MPV.NET:
   - Precise frame-stepping (backward and forward).
   - Open URL dialog: prompts for a stream URL and sends it directly to the player.
 
-### ⏱️ gbyntimer2 (SuperTimer)
+### ⏱️ gSleepTimer v2
 
 Modernized Windows power management remote:
 - **Live Countdown & Progress Bar:** Updates every second with formatted remaining time (`Shutting down in 1h 15m 00s`) and visual progress percentage.
