@@ -6,15 +6,21 @@
 - **Zero-Test Constraint:** Do NOT create test files or execute test suites. Use static analysis only.
 - **Static Syntax Validation:** Validate all Lua files via LuaJIT compiler (`loadfile`) and all XML files via `[xml]`.
 - **Environment Isolation:** Do NOT touch running processes, Unified Remote instances, or external directories (`%APPDATA%`, `%PROGRAMDATA%`). All operations must remain strictly inside this workspace.
-- **Path Hygiene & Public Repo Standards:** Do NOT reference files outside the repository. Do NOT use hardcoded absolute paths specific to any developer's local machine (e.g., `C:\Users\...`). All paths must be relative or standard environment variables (`%APPDATA%`, `~/`).
-- **Git Discipline:** Commit locally on dedicated feature branches with Conventional Commits (`feat:`, `refactor:`, `fix:`, `docs:`). NEVER commit directly to `master` or `main`. Do NOT push to remote repositories or open PRs unless explicitly instructed.
+- **Path Hygiene & Public Repo Standards:** Do NOT reference files outside the repository. Do NOT use hardcoded absolute paths specific to any developer's local machine (such as developer home directories or local drive roots). All paths must be relative or standard environment variables (`%APPDATA%`, `~/`).
+- **Git Discipline:** Commit locally on dedicated feature branches with Conventional Commits (`feat:`, `refactor:`, `fix:`, `docs:`, `chore:`). NEVER commit directly to `master` or `main`. Do NOT push to remote repositories or open PRs unless explicitly instructed.
 - **Custom Keybindings Authority:** `context/input.conf` contains the custom MPV.NET keybindings. It must remain 100% byte-for-byte identical (never edit or reformat it).
 
 ## 2. Unified Remote Specification Constraints
+- **Canonical Remote Inventory & Standards:**
+  - All remotes are authored by `g` (`meta.author: g`).
+  - Legacy identifiers (`gbyn`, `SuperTimer`, `Pro`) are strictly prohibited across all remotes and documentation.
+  - `gMPV`: Classic single-tab MPV / MPV.NET media remote (`meta.tags.category: media`).
+  - `gMPV v2`: Advanced 4-tab MPV.NET media remote with audio/sub sync, speed scaling, and OSD tools (`meta.tags.category: media`).
+  - `gSleepTimer`: Classic grid-based Windows shutdown timer (`meta.tags.category: utility`).
+  - `gSleepTimer v2`: Smart Windows power manager with live countdown, progress bar, custom dialog, and sleep/hibernate (`meta.tags.category: utility`).
 - **`meta.prop`:**
-  - Standard keys: `meta.name`, `meta.author`, `meta.description`, `meta.platform: windows`, `meta.tags.category: media|utility`.
-  - NEVER use `meta.version: 1.0/2.0` (it fails .NET integer parsing).
-  - NEVER use `meta.id` (directory name is the remote ID).
+  - Standard keys: `meta.name`, `meta.author: g`, `meta.description`, `meta.platform: windows`, `meta.tags.category: media|utility`.
+  - NEVER use `meta.version` or `meta.id`: Omit `meta.version` entirely across all remotes to avoid .NET integer parsing exceptions (`FormatException`). NEVER use `meta.id` (directory name is the remote ID).
 - **`layout.xml`:**
   - Control element `color="..."` strictly accepts named colors: `red`, `grey`, `blue`, `green`, `orange`, `purple`, `pink`, `yellow`, `transparent`.
   - Never pass hex (`#hex`) to `color` on controls. Use `lightcolor` and `darkcolor` on `<layout>`.
@@ -25,7 +31,7 @@
   - Action formatting: `actions.<name> = function ()` with space before `()` and statement semicolons (`;`).
   - Actions must have `--@help <Description>` annotations.
   - When calling Windows shutdown, always prepend `shutdown -a` to avoid Error 1190.
-  - In FFI, `user32` functions (`LockWorkStation`) reside in `ffi.C`. Wrap FFI in `pcall` with CLI fallbacks.
+  - In FFI, `user32` functions (`LockWorkStation`) reside in `ffi.C`, while power states (`SetSuspendState` for sleep/hibernate) are loaded via `ffi.load("PowrProf")`. Always wrap FFI in `pcall` with CLI fallbacks (`rundll32.exe`, `shutdown.exe`).
 
 ## 3. Workflow & Orchestration
 - Use a multi-agent workflow: Orchestrator coordinates phases on dedicated feature branches, Worker implements & checks, and Dual Reviewers (Quality/Spec Reviewer + Adversarial Reviewer) perform independent reviews before converging on semantic commits. Never commit directly to `master` or `main`.

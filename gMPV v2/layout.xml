@@ -63,7 +63,7 @@
             </row>
         </tab>
 
-        <tab text="Video &amp; Speed">
+        <tab text="Video and Speed">
             <row>
                 <button text="0.5x" ontap="speed_half" />
                 <button text="-10%" ontap="speed_down" />
@@ -84,7 +84,7 @@
             </row>
         </tab>
 
-        <tab text="Tools &amp; OSD">
+        <tab text="Tools and OSD">
             <row>
                 <button text="Focus MPV Window" ontap="focus_mpv" />
             </row>
