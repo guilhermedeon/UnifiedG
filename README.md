@@ -118,7 +118,8 @@ Modernized Windows power management remote:
 Contributions must follow the project rules outlined in [`AGENTS.md`](./AGENTS.md):
 - **Mandatory Feature Branching:** Always create a dedicated branch (`feat/<name>`, `fix/<name>`, `docs/<name>`, `refactor/<name>`). Never commit directly to `main` or `master`.
 - **Zero-Test Constraint:** Do not create test files or execute test suites; use static syntax validation only.
-- **Syntax Validation:** Verify Lua scripts via LuaJIT compiler (`loadfile`) and XML files via XML DOM parsers.
+- **Static Syntax Validation:** Verify Lua scripts via LuaJIT compiler (`loadfile`) and XML files via XML DOM parsers.
+- **Lua Execution Safety:** Never execute or invoke Lua action functions directly on development machines. These handlers dispatch real OS commands (shutdown, reboot, sleep, lock, volume changes). Testing them at runtime will power off, lock, or alter the host computer.
 - **Git Discipline:** Use Conventional Commits (`feat:`, `fix:`, `refactor:`, `docs:`, `chore:`).
 
 ---

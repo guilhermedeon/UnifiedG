@@ -5,6 +5,7 @@
 - **Mandatory Documentation Reconciliation:** ALWAYS reconcile and keep all documentation (`AGENTS.md`, skills under `.agents/skills/`, `README.md`, and any project docs) 100% up-to-date whenever making architectural, naming, or code changes. There are to be NO OUTDATED docs anywhere in this project.
 - **Zero-Test Constraint:** Do NOT create test files or execute test suites. Use static analysis only.
 - **Static Syntax Validation:** Validate all Lua files via LuaJIT compiler (`loadfile`) and all XML files via `[xml]`.
+- **Lua Execution Safety & Host Protection:** NEVER execute, call, or dynamically test Lua functions or action handlers (`actions.<name>()`) on the host machine. Remote scripts interface directly with Windows OS APIs and CLI commands (`shutdown.exe`, `rundll32.exe`, `PowrProf.SetSuspendState`, `user32.LockWorkStation`, volume keystrokes). Executing them will trigger live host side-effects: shutting down the developer's computer, locking the screen, muting or altering audio volume, or disrupting active applications. All Lua verification must remain strictly static (`loadfile` bytecode compilation check only).
 - **Environment Isolation:** Do NOT touch running processes, Unified Remote instances, or external directories (`%APPDATA%`, `%PROGRAMDATA%`). All operations must remain strictly inside this workspace.
 - **Path Hygiene & Public Repo Standards:** Do NOT reference files outside the repository. Do NOT use hardcoded absolute paths specific to any developer's local machine (such as developer home directories or local drive roots). All paths must be relative or standard environment variables (`%APPDATA%`, `~/`).
 - **Git Discipline:** Commit locally on dedicated feature branches with Conventional Commits (`feat:`, `refactor:`, `fix:`, `docs:`, `chore:`). NEVER commit directly to `master` or `main`. Do NOT push to remote repositories or open PRs unless explicitly instructed.
@@ -32,6 +33,7 @@
   - Actions must have `--@help <Description>` annotations.
   - When calling Windows shutdown, always prepend `shutdown -a` to avoid Error 1190.
   - In FFI, `user32` functions (`LockWorkStation`) reside in `ffi.C`, while power states (`SetSuspendState` for sleep/hibernate) are loaded via `ffi.load("PowrProf")`. Always wrap FFI in `pcall` with CLI fallbacks (`rundll32.exe`, `shutdown.exe`).
+  - **Runtime Execution Hazard:** Never call action functions in test scripts, harnesses, or subagent tasks. Doing so triggers real system actions (power off, lock, mute).
 
 ## 3. Workflow & Orchestration
 - Use a multi-agent workflow: Orchestrator coordinates phases on dedicated feature branches, Worker implements & checks, and Dual Reviewers (Quality/Spec Reviewer + Adversarial Reviewer) perform independent reviews before converging on semantic commits. Never commit directly to `master` or `main`.
