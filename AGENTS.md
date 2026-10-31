@@ -2,6 +2,7 @@
 
 ## 1. Operating Rules & Constraints
 - **Mandatory Feature Branching:** ALWAYS create and switch to a dedicated feature branch (`feat/<name>`, `fix/<name>`, `docs/<name>`, `refactor/<name>`) before making changes. NEVER commit directly to `master` or `main`.
+- **Mandatory Documentation Reconciliation:** ALWAYS reconcile and keep all documentation (`AGENTS.md`, skills under `.agents/skills/`, `README.md`, and any project docs) 100% up-to-date whenever making architectural, naming, or code changes. There are to be NO OUTDATED docs anywhere in this project.
 - **Zero-Test Constraint:** Do NOT create test files or execute test suites. Use static analysis only.
 - **Static Syntax Validation:** Validate all Lua files via LuaJIT compiler (`loadfile`) and all XML files via `[xml]`.
 - **Environment Isolation:** Do NOT touch running processes, Unified Remote instances, or external directories (`%APPDATA%`, `%PROGRAMDATA%`). All operations must remain strictly inside this workspace.
@@ -28,6 +29,7 @@
 
 ## 3. Workflow & Orchestration
 - Use a multi-agent workflow: Orchestrator coordinates phases on dedicated feature branches, Worker implements & checks, and Dual Reviewers (Quality/Spec Reviewer + Adversarial Reviewer) perform independent reviews before converging on semantic commits. Never commit directly to `master` or `main`.
+- Dual reviewers must enforce documentation reconciliation: no PR or milestone convergence is allowed if documentation (`README.md`, `AGENTS.md`, skill files) is lagging behind code changes.
 - Refer to the `unified-remote-dev` skill (`.agents/skills/unified-remote-dev/SKILL.md`) for full API and syntax details.
 
 ## 4. Authoritative Knowledge Sources & Reference Repositories

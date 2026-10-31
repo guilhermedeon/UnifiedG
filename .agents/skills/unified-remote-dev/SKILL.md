@@ -13,12 +13,13 @@ This skill provides an authoritative reference and operational playbook for deve
 
 When working on Unified Remote repositories:
 1. **Mandatory Feature Branching:** ALWAYS create a dedicated feature branch (`feat/<name>`, `fix/<name>`, `docs/<name>`, `refactor/<name>`) before making any changes. NEVER commit directly to `main` or `master`.
-2. **Zero-Test Constraint:** Do **NOT** create test files and do **NOT** execute test suites. Unified Remote remotes are standalone packages; verification must rely strictly on static analysis.
-3. **Static Syntax Validation:** Always validate Lua scripts via bytecode compilation (`loadfile` / `luac` / LuaJIT) and XML layouts via XML DOM parsers (`[xml]` in PowerShell or `xml.etree.ElementTree` in Python).
-4. **Environment Isolation:** Never run commands that interact with or restart the active Unified Remote Server process or external directories (`%APPDATA%`, `%PROGRAMDATA%`). Confine all edits and scripts strictly to the project workspace.
-5. **Path Hygiene & Public Repo Standards:** Do NOT reference external files or embed developer-specific hardcoded paths (e.g., `C:\Users\...`). Keep all documentation, paths, and scripts portable for public repositories using environment variables (`%APPDATA%`, `~/`) or repo-relative paths.
-6. **Local Semantic Commits Only:** Commit locally on dedicated feature branches using Conventional Commits (`feat:`, `refactor:`, `fix:`, `docs:`, `chore:`). Never push to remote git remotes or open PRs unless explicitly instructed.
-7. **Keybinding Preservation:** When mapping existing applications (such as MPV.NET via `input.conf`), treat user keybinding configuration files as authoritative and immutable (byte-for-byte preservation).
+2. **Mandatory Documentation Reconciliation:** ALWAYS reconcile and keep all documentation (skills under `.agents/skills/`, `AGENTS.md`, `README.md`, architecture guides) 100% synchronized and up-to-date whenever modifying code, layouts, metadata, naming, or rules. There are to be NO OUTDATED docs anywhere in the project.
+3. **Zero-Test Constraint:** Do **NOT** create test files and do **NOT** execute test suites. Unified Remote remotes are standalone packages; verification must rely strictly on static analysis.
+4. **Static Syntax Validation:** Always validate Lua scripts via bytecode compilation (`loadfile` / `luac` / LuaJIT) and XML layouts via XML DOM parsers (`[xml]` in PowerShell or `xml.etree.ElementTree` in Python).
+5. **Environment Isolation:** Never run commands that interact with or restart the active Unified Remote Server process or external directories (`%APPDATA%`, `%PROGRAMDATA%`). Confine all edits and scripts strictly to the project workspace.
+6. **Path Hygiene & Public Repo Standards:** Do NOT reference external files or embed developer-specific hardcoded paths (e.g., `C:\Users\...`). Keep all documentation, paths, and scripts portable for public repositories using environment variables (`%APPDATA%`, `~/`) or repo-relative paths.
+7. **Local Semantic Commits Only:** Commit locally on dedicated feature branches using Conventional Commits (`feat:`, `refactor:`, `fix:`, `docs:`, `chore:`). Never push to remote git remotes or open PRs unless explicitly instructed.
+8. **Keybinding Preservation:** When mapping existing applications (such as MPV.NET via `input.conf`), treat user keybinding configuration files as authoritative and immutable (byte-for-byte preservation).
 
 ---
 
@@ -204,6 +205,7 @@ flowchart TD
    - Audits `layout.xml` for valid control colors, hierarchy, and tags.
    - Verifies zero `local function` in `remote.lua`.
    - Verifies 0 test files created and `input.conf` byte-for-byte preservation.
+   - Verifies documentation reconciliation: ensures `README.md`, `AGENTS.md`, and skill guides reflect current naming and behavior without outdated artifacts.
 4. **Role: Reviewer 2 (Adversarial & Edge-Cases)**
    - Verifies 100% action binding coverage: every `ontap`, `onVolumeUp`, `onVolumeDown` maps to an action.
    - Checks XML entity escaping (`&amp;`) and FFI fallback safety.
